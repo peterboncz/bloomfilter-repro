@@ -16,6 +16,7 @@ namespace cuckoofilter {
 // the most naive table implementation: one huge bit array
 template <size_t bits_per_tag>
 class SingleTable {
+ public:
   static const size_t kTagsPerBucket = 4;
   static const size_t kBytesPerBucket =
       (bits_per_tag * kTagsPerBucket + 7) >> 3;
@@ -57,6 +58,7 @@ class SingleTable {
     ss << "\t\tAssociativity: " << kTagsPerBucket << "\n";
     ss << "\t\tTotal # of rows: " << num_buckets_ << "\n";
     ss << "\t\tTotal # slots: " << SizeInTags() << "\n";
+    ss << "\t\tkBytesPerBucket: " << kBytesPerBucket << "\n";
     return ss.str();
   }
 
@@ -194,6 +196,8 @@ class SingleTable {
       }
     }
     if (kickout) {
+//      std::cout << "!" << std::flush;
+
       size_t r = rand() % kTagsPerBucket;
       oldtag = ReadTag(i, r);
       WriteTag(i, r, tag);

@@ -1,93 +1,118 @@
-Cuckoo Filter
-============
+Bloom and Cuckoo Filter Benchmark
+=================================
 
-Overview
---------
-Cuckoo filter is a Bloom filter replacement for approximated set-membership queries. While Bloom filters are well-known space-efficient data structures to serve queries like "if item x is in a set?", they do not support deletion. Their variances to enable deletion (like counting Bloom filters) usually require much more space.
+This repo contains the benchmark runner that was used to evaluate
+ Bloom and Cuckoo filters for the VLDB'19 paper  [*Performance-Optimal Filtering:
+ Bloom Overtakes Cuckoo at High Throughput*](http://www.vldb.org/pvldb/vol12/p502-lang.pdf).
 
-Cuckoo ﬁlters provide the ﬂexibility to add and remove items dynamically. A cuckoo filter is based on cuckoo hashing (and therefore named as cuckoo filter).  It is essentially a cuckoo hash table storing each key's fingerprint. Cuckoo hash tables can be highly compact, thus a cuckoo filter could use less space than conventional Bloom ﬁlters, for applications that require low false positive rates (< 3%).
+The repo is based on the Cuckoo filter repo and includes a slightly modified
+ version of the Cuckoo filter as presented in the ACM CoNEXT'14 paper
+ [*Cuckoo Filter: Practically Better Than Bloom*](http://www.cs.cmu.edu/~binfan/papers/conext14_cuckoofilter.pdf).
+If you are looking for the latest version of the Cuckoo filter, please refer to
+ [https://github.com/efficient/cuckoofilter](https://github.com/efficient/cuckoofilter).
 
-For details about the algorithm and citations please use:
+Further we include a copy of the Bloom filter implementation from the
+ [Impala](https://impala.apache.org/) database system (see 'src/simd-block.h')
+ and the [vectorized Bloom filter](http://www.cs.columbia.edu/~orestis/vbf.c)
+ as presented in the DaMoN'14 paper
+ [*Vectorized Bloom Filters for Advanced SIMD Processors*](http://www.cs.columbia.edu/~orestis/damon14.pdf).
 
-["Cuckoo Filter: Practically Better Than Bloom"](http://www.cs.cmu.edu/~binfan/papers/conext14_cuckoofilter.pdf) in proceedings of ACM CoNEXT 2014 by Bin Fan, Dave Andersen and Michael Kaminsky
+Our SIMD-optimized implementations of Bloom and Cuckoo filters are included
+ as a git submodule. The source code can be found in the GitHub repo
+ [bloomfilter-bsd](https://github.com/peterboncz/bloomfilter-bsd).
 
 
-API
---------
-A cuckoo filter supports following operations:
+### Erratum
+Post-publication an error was found (and fixed) in the collision resolution of
+ cuckoo filters with arbitrarily sized tables.
+We refer to our blog post
+["Cuckoo Filters with arbitrarily sized tables"](https://databasearchitects.blogspot.com/2019/07/cuckoo-filters-with-arbitrarily-sized.html) for details.
 
-*  `Add(item)`: insert an item to the filter
-*  `Contain(item)`: return if item is already in the filter. Note that this method may return false positive results like Bloom filters
-*  `Delete(item)`: delete the given item from the filter. Note that to use this method, it must be ensured that this item is in the filter (e.g., based on records on external storage); otherwise, a false item may be deleted.
-*  `Size()`: return the total number of items currently in the filter
-*  `SizeInBytes()`: return the filter size in bytes
 
-Here is a simple example in C++ for the basic usage of cuckoo filter.
-More examples can be found in `example/` directory.
+Using the Code
+--------------
+### Prerequisites
+* A C++14 compliant compiler; only GCC has been tested.
+* [CMake](http://www.cmake.org/) version 3.5 or later.
+* The [Boost C++ Libraries](https://www.boost.org/), version 1.58 or later.
+* A Linux environment (including the BASH shell and the typical GNU tools).
+* SQLite version 3.x
+* a TeX distribution, e.g. TeX Live (optional)
 
-```cpp
-// Create a cuckoo filter where each item is of type size_t and
-// use 12 bits for each item, with capacity of total_items
-CuckooFilter<size_t, 12> filter(total_items);
-// Insert item 12 to this cuckoo filter
-filter.Add(12);
-// Check if previously inserted items are in the filter
-assert(filter.Contain(12) == cuckoofilter::Ok);
+
+### Repository structure
+* `benchmarks/`: the benchmark runner
+* `module/dtl/`: git submodule for the SIMD-optimized filter implementations
+ * In particular, our Bloom filter implementation can be found in `./filter/blocked_bloomfilter/` and our Cuckoo implementation in
+ `./filter/cuckoofilter/`
+* `scripts/`: several shell scripts that drive the benchmark
+* `src/`: the C++ header and implementation of the (original) cuckoo filter, the
+   Impala and vectorized Bloom filters
+* `tex/`: LaTeX files to typeset the results
+
+### Building
 ```
-
-Repository structure
---------------------
-*  `src/`: the C++ header and implementation of cuckoo filter
-*  `example/test.cc`: an example of using cuckoo filter
-*  `benchmarks/`: Some benchmarks of speed, space used, and false positive rate
-
-
-Build
--------
-This libray depends on openssl library. Note that on MacOS 10.12, the header
-files of openssl are not available by default. It may require to install openssl
-and pass the path to `lib` and `include` directories to gcc, for example:
-
-```bash
-$ brew install openssl
-# Replace 1.0.2j with the actual version of the openssl installed
-$ export LDFLAGS="-L/usr/local/Cellar/openssl/1.0.2j/lib"
-$ export CFLAGS="-I/usr/local/Cellar/openssl/1.0.2j/include"
+git clone git@github.com:peterboncz/bloomfilter-repro.git
+cd bloomfilter-repro
+git submodule update --remote --recursive --init
+mkdir build
+cd build/
+cmake -DCMAKE_BUILD_TYPE=Release ..
+make -j 8 n_filter
+make -j 8 get_cache_size
+make -j 8 benchmark_`./determine_arch.sh`
 ```
+The benchmark runner can be compiled for the following architectures:
 
-To build the example (`example/test.cc`):
-```bash
-$ make test
+| Architecture | Description                                                                              |
+| ------------ | ---------------------------------------------------------------------------------------- |
+| `corei7`     | targets pre-AVX2 processor generations. All SIMD optimizations are disabled.             |
+| `core-avx2`  | targets Intel Haswell (or later) and AMD Ryzen processors with the AVX2 instruction set. |
+| `knl`        | targets Intel Knights Landing (KNL) processor with the AVX-512F instruction set.         |
+| `skx`        | targets Intel Skylake-X (or later) processors with the AVX-512F/BW instruction set.      |
+
+### Benchmarking
+
+For a quick start, we provide a *scripted* benchmark which automatically
+ performs several performance measurements and imports the results into a
+ SQLite database. Optionally a summary sheet is generated.
+
+The following scripts need to be executed in the given order:
 ```
-
-To build the benchmarks:
-```bash
-$ cd benchmarks
-$ make
+./benchmark.sh
+./aggr_results.sh
+./summary.sh
 ```
+The `benchmark.sh` script performs the actual measurements and stores the CSV results in
+ the directory `./results`.
+The `aggr_results.sh` script imports the raw results into a SQLite database
+ stored in `./results/skyline.sqlite3`.
+Optionally, the `summary.sh` script typesets a summary PDF.
 
-Install
--------
-To install the cuckoofilter library:
-```bash
-$ make install
-```
-By default, the header files will be placed in `/usr/local/include/cuckoofilter`
-and the static library at `/usr/local/lib/cuckoofilter.a`.
+To perform other analyses, we refer to the source code of the scripts
+ mentioned above.
+Further details on the output format and
+ the benchmark options can be found [here](BENCHMARK.md).
 
-
-Contributing
+Related Work
 ------------
-Contributions via GitHub pull requests are welcome. Please keep the code style guided by
-[Google C++ style](https://google.github.io/styleguide/cppguide.html). One can use
-[clang-format](http://clang.llvm.org/docs/ClangFormat.html) with our provided
-[`.clang-format`](https://github.com/efficient/cuckoofilter/blob/master/.clang-format)
-in this repository to enforce the style.
+
+* [Morton Filter](https://github.com/AMDComputeLibraries/morton_filter)
+> A Morton filter is a modified cuckoo filter [...] that is optimized for bandwidth-constrained systems.
+
+* [Fluid Co-Processing](https://github.com/t1mm3/fluid_coprocessing)
 
 
 
-Authors
--------
-- Bin Fan <binfan@cs.cmu.edu>
-- David G. Andersen <dga@cs.cmu.edu>
-- Michael Kaminsky <michael.e.kaminsky@intel.com>
+
+Licenses
+--------
+
+* The [Cuckoo filter](https://github.com/efficient/cuckoofilter) and the
+   [Impala](https://impala.apache.org/) Bloom filter implementation are licensed
+   under the Apache License, Version 2.0.
+* [Vectorized Bloom filters](http://www.cs.columbia.edu/~orestis/vbf.c) are
+   licensed under the 2-clause BSD license.
+* Our [SIMD-optimized implementations](https://github.com/peterboncz/bloomfilter-bsd)
+   are dual licensed under the Apache License, Version 2.0 and the 3-clause BSD
+   license.  

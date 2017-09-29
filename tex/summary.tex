@@ -1,0 +1,256 @@
+\documentclass{article}
+
+% ===------------------------------------------------------------------------===
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+% \usepackage{array}
+% \usepackage{multirow}
+\usepackage{graphicx}
+\usepackage[labelfont=bf]{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+% \usepackage{balance}
+% \usepackage{comment}
+\newcommand{\rel}[1]{\textsc{#1}}
+% \usepackage{booktabs}
+% \usepackage{tabularx}
+% \usepackage{setspace}
+% \usepackage{todonotes}
+\usepackage{pgfplots}
+% \usepackage{threeparttable}
+% \usepackage{balance}
+% \usepackage{url}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={190mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+
+\newcommand{\externaldirectory}{output/}
+\usepgfplotslibrary{external} % to create plots in separate files
+\usetikzlibrary{external}
+\tikzexternalize
+\tikzexternaldisable % Externalize only on-demand.
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=0.5pt] (char) {#1};}}
+
+\pgfplotsset{
+  compat=newest,
+  tick label style = {font=\sffamily\small},
+  every axis label = {font=\sffamily\small},
+  legend style = {font=\sffamily\small},
+  label style = {font=\sffamily\small},
+  grid style={gray!50},
+  every x tick label/.append style={font=\tiny, yshift=0.5ex},
+  every y tick label/.append style={font=\tiny, xshift=0.5ex}
+}
+
+\tikzstyle{every node}=[font=\sffamily\small]
+
+% MDL palette
+\definecolor{plotcolor1}{HTML}{2296F4}
+\definecolor{plotcolor2}{HTML}{F54236}
+\definecolor{plotcolor3}{HTML}{FF9802}
+\definecolor{plotcolor4}{HTML}{4CAF50}
+\definecolor{plotcolor5}{HTML}{9C27B0}
+\definecolor{plotcolor6}{HTML}{3F51B5}
+\definecolor{plotcolor7}{HTML}{CEDC39}
+
+% GDocs palette
+%\definecolor{plotcolor1}{HTML}{3C68C8}
+%\definecolor{plotcolor2}{HTML}{D64226}
+%\definecolor{plotcolor3}{HTML}{FB992B}
+%\definecolor{plotcolor4}{HTML}{289327}
+%\definecolor{plotcolor5}{HTML}{951E96}
+%\definecolor{plotcolor6}{HTML}{e91e63}
+
+%\definecolor{plotcolor7}{HTML}{F36A22}
+% \definecolor{plotcolor1}{HTML}{F70000}
+% \definecolor{plotcolor2}{HTML}{62D0FF}
+% \definecolor{plotcolor3}{HTML}{2966B8}
+% \definecolor{plotcolor4}{HTML}{48FB0D}
+% \definecolor{plotcolor5}{HTML}{59955C}
+% \definecolor{plotcolor6}{HTML}{FAB082}
+% \definecolor{plotcolor7}{HTML}{F36A22}
+
+
+\definecolor{speedupcolor11}{HTML}{FF9802}
+\definecolor{speedupcolor10}{HTML}{FFC206}
+\definecolor{speedupcolor9}{HTML}{FFEB3B}
+\definecolor{speedupcolor8}{HTML}{CEDC39}
+\definecolor{speedupcolor7}{HTML}{8BC34A}
+\definecolor{speedupcolor6}{HTML}{4CAF50}
+\definecolor{speedupcolor5}{HTML}{029588}
+\definecolor{speedupcolor4}{HTML}{01BCD4}
+\definecolor{speedupcolor3}{HTML}{04A9F4}
+\definecolor{speedupcolor2}{HTML}{2296F4}
+\definecolor{speedupcolor1}{HTML}{3F51B5}
+%\definecolor{speedupcolor1}{HTML}{FF0300}
+%\definecolor{speedupcolor2}{HTML}{FF5400}
+%\definecolor{speedupcolor3}{HTML}{FF8800}
+%\definecolor{speedupcolor4}{HTML}{FFCC00}
+%\definecolor{speedupcolor5}{HTML}{FFF700}
+%\definecolor{speedupcolor6}{HTML}{EDFF00}
+%\definecolor{speedupcolor7}{HTML}{E1FF74}
+%\definecolor{speedupcolor8}{HTML}{CAFF59}
+%\definecolor{speedupcolor9}{HTML}{95FF0A}
+%\definecolor{speedupcolor10}{HTML}{69FF00}
+%\definecolor{speedupcolor11}{HTML}{86FF56}
+
+
+\pgfdeclareplotmark{f*}{\begin{scope}[opacity=1]\pgfpathcircle{\pgfpointorigin}{1.25\pgfplotmarksize}\pgfusepathqfill\end{scope}}
+\pgfdeclareplotmark{fx}{\begin{scope}[opacity=1]\pgfuseplotmark{triangle}\end{scope}}
+\pgfdeclareplotmark{fs}{\begin{scope}[opacity=1]\pgfuseplotmark{square}\end{scope}}
+\pgfdeclareplotmark{f+}{\begin{scope}[opacity=1]\pgfuseplotmark{+}\end{scope}}
+\pgfdeclareplotmark{fo}{\begin{scope}[opacity=1]\pgfuseplotmark{o}\end{scope}}
+
+\definecolor{kcolor1}{HTML}{FF9802}
+\definecolor{kcolor2}{HTML}{FFC206}
+\definecolor{kcolor3}{HTML}{FFEB3B}
+\definecolor{kcolor4}{HTML}{CEDC39}
+\definecolor{kcolor5}{HTML}{8BC34A}
+\definecolor{kcolor6}{HTML}{4CAF50}
+\definecolor{kcolor7}{HTML}{029588}
+\definecolor{kcolor8}{HTML}{01BCD4}
+\definecolor{kcolor9}{HTML}{04A9F4}
+\definecolor{kcolor10}{HTML}{2296F4}
+\definecolor{kcolor11}{HTML}{3F51B5}
+\definecolor{kcolor12}{HTML}{673AB7}
+\definecolor{kcolor13}{HTML}{9C27B0}
+\definecolor{kcolor14}{HTML}{E91E63}
+\definecolor{kcolor15}{HTML}{F54236}
+\definecolor{kcolor16}{HTML}{FF5722}
+
+\definecolor{svzcolor1}{HTML}{FF0000}
+\definecolor{svzcolor2}{HTML}{FF9802}
+\definecolor{svzcolor3}{HTML}{FFC206}
+\definecolor{svzcolor4}{HTML}{FFEB3B}
+\definecolor{svzcolor5}{HTML}{CEDC39}
+\definecolor{svzcolor6}{HTML}{8BC34A}
+\definecolor{svzcolor7}{HTML}{4CAF50}
+\definecolor{svzcolor8}{HTML}{029588}
+\definecolor{svzcolor9}{HTML}{01BCD4}
+\definecolor{svzcolor10}{HTML}{04A9F4}
+\definecolor{svzcolor11}{HTML}{2296F4}
+\definecolor{svzcolor12}{HTML}{3F51B5}
+\definecolor{svzcolor13}{HTML}{673AB7}
+\definecolor{svzcolor14}{HTML}{9C27B0}
+\definecolor{svzcolor15}{HTML}{E91E63}
+\definecolor{svzcolor16}{HTML}{F54236}
+\definecolor{svzcolor17}{HTML}{FF5722}
+
+\definecolor{memfootprintcolor6}{HTML}{FF9802}
+\definecolor{memfootprintcolor5}{HTML}{FFC206}
+\definecolor{memfootprintcolor4}{HTML}{FFEB3B}
+\definecolor{memfootprintcolor3}{HTML}{CEDC39}
+\definecolor{memfootprintcolor2}{HTML}{8BC34A}
+\definecolor{memfootprintcolor1}{HTML}{4CAF50}
+\definecolor{memfootprintcolor7}{HTML}{FF5722}
+\definecolor{memfootprintcolor8}{HTML}{01BCD4}
+\definecolor{memfootprintcolor9}{HTML}{04A9F4}
+\definecolor{memfootprintcolor10}{HTML}{2296F4}
+\definecolor{memfootprintcolor11}{HTML}{3F51B5}
+\definecolor{memfootprintcolor12}{HTML}{673AB7}
+\definecolor{memfootprintcolor13}{HTML}{9C27B0}
+\definecolor{memfootprintcolor14}{HTML}{E91E63}
+\definecolor{memfootprintcolor15}{HTML}{F54236}
+\definecolor{memfootprintcolor16}{HTML}{FF5722}
+
+\definecolor{filtercolor1}{HTML}{CCDD3A}
+\definecolor{filtercolor2}{HTML}{99E0E8}
+\definecolor{filtercolor3}{HTML}{3F51B5}
+\definecolor{filtercolor4}{HTML}{01BCD4}
+
+\definecolor{blocksizecolor1}{HTML}{4CAF50}
+\definecolor{blocksizecolor2}{HTML}{8BC34A}
+\definecolor{blocksizecolor3}{HTML}{CEDC39}
+\definecolor{blocksizecolor4}{HTML}{FFEB3B}
+\definecolor{blocksizecolor5}{HTML}{FFC206}
+\definecolor{blocksizecolor6}{HTML}{FF9802}
+
+\definecolor{sectorcntcolor1}{HTML}{FF9802}
+\definecolor{sectorcntcolor2}{HTML}{FFC206}
+\definecolor{sectorcntcolor3}{HTML}{FFEB3B}
+\definecolor{sectorcntcolor4}{HTML}{CEDC39}
+\definecolor{sectorcntcolor5}{HTML}{8BC34A}
+\definecolor{sectorcntcolor6}{HTML}{4CAF50}
+\definecolor{sectorcntcolor7}{HTML}{029588}
+\definecolor{sectorcntcolor8}{HTML}{01BCD4}
+\definecolor{sectorcntcolor9}{HTML}{04A9F4}
+\definecolor{sectorcntcolor10}{HTML}{2296F4}
+\definecolor{sectorcntcolor11}{HTML}{3F51B5}
+\definecolor{sectorcntcolor12}{HTML}{673AB7}
+\definecolor{sectorcntcolor13}{HTML}{9C27B0}
+\definecolor{sectorcntcolor14}{HTML}{E91E63}
+\definecolor{sectorcntcolor15}{HTML}{F54236}
+\definecolor{sectorcntcolor16}{HTML}{FF5722}
+
+\definecolor{zonecntcolor1}{HTML}{CECECE}
+\definecolor{zonecntcolor2}{HTML}{4CAF50}
+\definecolor{zonecntcolor3}{HTML}{FFEB3B}
+\definecolor{zonecntcolor4}{HTML}{8BC34A}
+
+\definecolor{accesscolor1}{HTML}{FFC206}
+\definecolor{accesscolor2}{HTML}{FFEB3B}
+\definecolor{accesscolor3}{HTML}{8BC34A}
+\definecolor{accesscolor4}{HTML}{4CAF50}
+
+\definecolor{wordcntcolor1}{HTML}{01BCD4}
+\definecolor{wordcntcolor2}{HTML}{673AB7}
+
+\definecolor{addrcolor1}{HTML}{04A9F4}
+\definecolor{addrcolor2}{HTML}{9C27B0}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{myblue}{rgb}{0,0,0.8}
+\definecolor{mygray}{rgb}{0.6,0.6,0.6}
+\lstset{
+  basicstyle=\small\ttfamily,      % the size of the fonts that are used for the code
+  %basicstyle=\small\rmfamily,      % the size of the fonts that are used for the code
+  columns=fullflexible,
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=none,                 % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{myblue},     % keyword style
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\usepackage[T1]{fontenc}
+\usepackage[scaled]{beramono}
+
+%running fraction with slash - requires math mode.
+\newcommand*\rfrac[2]{{}^{#1}\!/_{#2}}
+
+\def\ParHead{\vspace*{2mm}\noindent\bf}
+
+%\newcommand\todo[1]{{\color{red}\bfseries TODO: #1}}
+
+% \pagestyle{empty}
+
+\begin{document}
+
+% \input{plot_skyline_filter.tex}
+% \input{plot_skyline_perf_cmp.tex}
+% \input{plot_skyline_fpr.tex}
+\input{plot_skyline_overview.tex}
+\input{plot_skyline_bbf_config.tex}
+\input{plot_skyline_cf_config.tex}
+
+\end{document}

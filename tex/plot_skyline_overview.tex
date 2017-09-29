@@ -1,0 +1,93 @@
+\begin{figure*}
+  \begin{subfigure}[b]{0.30\textwidth}
+    \centering
+    \tikzexternalenable
+    \tikzsetnextfilename{figure_skyline_filter}
+    \begin{tikzpicture}
+        \begin{axis}[
+        clip mode=individual,
+        height=3.7cm,
+        width=4.8cm,
+        xmode=log,
+        ymode=log,
+        xlabel={$t_w$},
+        ylabel={$n$},
+        xlabel shift=-2pt,
+        ylabel shift=-4pt,
+        legend style={at={(1.0,1.1)},anchor=south east},
+        legend columns=1,
+        legend cell align={left},
+        legend image post style={xscale=0.95,yscale=0.95}
+        ]
+
+        \input{../plot/skyline_filter.tex}
+        \end{axis}
+    \end{tikzpicture}
+    \tikzexternaldisable
+    \caption{Performance-optimal filters for varying $n$ and $t_w$. \\
+            }
+  \end{subfigure}%
+  \hspace{1em}%
+  \begin{subfigure}[b]{0.30\textwidth}
+        \centering
+        \tikzexternalenable
+        \tikzsetnextfilename{figure_skyline_bbf_cf_performance_diff}
+        \begin{tikzpicture}
+        \begin{axis}[
+            height=3.7cm,
+            width=4.8cm,
+            xmode=log,
+            ymode=log,
+            xlabel={$t_w$},
+            ylabel={$n$},
+            xlabel shift=-2pt,
+            ylabel shift=-4pt,
+            clip mode=individual,
+            legend style={at={(1.0,1.1)},anchor=south east},
+            legend columns=2,
+            legend cell align={left},
+            legend image post style={xscale=0.5,yscale=0.5}
+          ]
+        \input{../plot/skyline_bbf_cf_performance_diff.tex}
+
+        \end{axis}
+        \end{tikzpicture}
+        \tikzexternaldisable
+        \vspace{-0.15cm}
+        \caption{Performance comparison of Bloom and Cuckoo filters.
+                 Speedup of the best filter over its counterpart.}
+        \label{fig:skyline_speedup}
+  \end{subfigure}%
+  \hspace{1em}%
+  \begin{subfigure}[b]{0.30\textwidth}
+    \centering
+    \tikzexternalenable
+    \tikzsetnextfilename{figure_skyline_fpr}
+    \begin{tikzpicture}
+    \begin{axis}[
+        height=3.7cm,
+        width=4.8cm,
+        xmode=log,
+        ymode=log,
+        xlabel={$t_w$},
+        ylabel={$n$},
+        xlabel shift=-2pt,
+        ylabel shift=-4pt,
+        clip mode=individual,
+        legend style={at={(1.0,1.1)},anchor=south east},
+        legend columns=1,
+        legend cell align={left},
+        legend image post style={xscale=0.5,yscale=0.5}
+      ]
+    \input{../plot/skyline_fpr.tex}
+
+    \end{axis}
+    \end{tikzpicture}
+    \tikzexternaldisable
+    \vspace{-0.15cm}
+    \caption{False-positive rates of the best performing filters. \\
+            }
+    \label{fig:skyline_fpr}
+  \end{subfigure}%
+  \caption{Summary}
+\end{figure*}

@@ -1,0 +1,4 @@
+[submodule "module/dtl"]
+	path = module/dtl
+	url = git@github.com:peterboncz/bloomfilter-bsd.git
+	branch = vldb

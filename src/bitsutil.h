@@ -5,6 +5,9 @@ namespace cuckoofilter {
 
 // inspired from
 // http://www-graphics.stanford.edu/~seander/bithacks.html#ZeroInWord
+#define haszero2(x) (((x)-0x5555ULL) & (~(x)) & 0xAAAAULL)
+#define hasvalue2(x, n) (haszero2((x) ^ (0x5555ULL * (n))))
+
 #define haszero4(x) (((x)-0x1111ULL) & (~(x)) & 0x8888ULL)
 #define hasvalue4(x, n) (haszero4((x) ^ (0x1111ULL * (n))))
 

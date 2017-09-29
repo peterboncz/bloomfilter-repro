@@ -1,0 +1,129 @@
+\begin{figure*}
+  \begin{subfigure}[t]{0.2\textwidth}
+    \centering
+    \tikzexternalenable
+    \tikzsetnextfilename{figure_skyline_cf_tag_size}
+    \begin{tikzpicture}
+      \begin{axis}[
+          height=3.7cm,
+          width=4.8cm,
+          xmode=log,
+          ymode=log,
+       		xlabel={$t_w$},
+       		ylabel={$n$},
+          xlabel shift=-2pt,
+          ylabel shift=-4pt,
+          legend style={at={(1,1.05)},anchor=south east,nodes={scale=0.75, transform shape}},
+          legend columns=4,
+          legend cell align={left},
+          clip mode=individual,
+          legend image post style={xscale=0.5,yscale=0.5}
+        ]
+      \input{../plot/skyline_cf_tag_size.tex}
+      \end{axis}
+    \end{tikzpicture}
+    \tikzexternaldisable
+    \vspace{-0.55cm}
+    \hspace{1em}
+    \caption{Signature length
+             }
+    \label{fig:skyline_cf_tag_size}
+  \end{subfigure}%
+  \hspace{2em}%
+  \begin{subfigure}[t]{0.2\textwidth}
+    \centering
+    \tikzexternalenable
+    \tikzsetnextfilename{figure_skyline_cf_associativity}
+      \begin{tikzpicture}
+      \begin{axis}[
+          height=3.7cm,
+          width=4.8cm,
+          xmode=log,
+          ymode=log,
+          xlabel={$t_w$},
+          ylabel={$n$},
+          xlabel shift=-2pt,
+          ylabel shift=-4pt,
+          legend style={at={(1,1.05)},anchor=south east,nodes={scale=0.75, transform shape}},
+          legend columns=3,
+          legend cell align={left},
+          clip mode=individual,
+          legend image post style={xscale=0.5,yscale=0.5}
+        ]
+      \input{../plot/skyline_cf_associativity.tex}
+
+      \end{axis}
+      \end{tikzpicture}
+      \tikzexternaldisable
+      \vspace{-0.55cm}
+      \caption{Bucket size
+               }
+      \label{fig:skyline_cf_associativity}
+
+  \end{subfigure}%
+  \hspace{2em}%
+  \begin{subfigure}[t]{0.2\textwidth}
+  \centering
+  \tikzexternalenable
+  \tikzsetnextfilename{figure_skyline_cf_addr}
+    \begin{tikzpicture}
+    \begin{axis}[
+        height=3.7cm,
+        width=4.8cm,
+        xmode=log,
+        ymode=log,
+        xlabel={$t_w$},
+        ylabel={$n$},
+        xlabel shift=-2pt,
+        ylabel shift=-4pt,
+        legend style={at={(1,1.05)},anchor=south east,nodes={scale=0.75, transform shape}},
+        legend columns=2,
+        legend cell align={left},
+        clip mode=individual,
+        legend image post style={xscale=0.5,yscale=0.5}
+      ]
+    \input{../plot/skyline_cf_addr.tex}
+    \end{axis}
+    \end{tikzpicture}
+    \tikzexternaldisable
+    \vspace{-0.55cm}
+    \caption{Modulo
+             }
+    \label{fig:skyline_cf_addr}
+
+  \end{subfigure}%
+  \hspace{2em}%
+  \begin{subfigure}[t]{0.2\textwidth}
+     \centering
+       \tikzexternalenable
+       \tikzsetnextfilename{figure_skyline_cf_memory_footprint}
+       \begin{tikzpicture}
+       \begin{axis}[
+           height=3.7cm,
+           width=4.8cm,
+           xmode=log,
+           ymode=log,
+	         xlabel={$t_w$},
+           ylabel={$n$},
+           xlabel shift=-2pt,
+           ylabel shift=-4pt,
+           legend style={at={(1,1.05)},anchor=south east,nodes={scale=0.75, transform shape}},
+           legend columns=3,
+           legend cell align={left},
+           clip mode=individual,
+           legend image post style={xscale=0.5,yscale=0.5}
+         ]
+       \input{../plot/skyline_cf_memory_footprint.tex}
+
+       \end{axis}
+       \end{tikzpicture}
+       \tikzexternaldisable
+       \vspace{-0.55cm}
+       \caption{Filter size
+                }
+       \label{fig:skyline_d_cf}
+
+    \end{subfigure}%
+  \caption{Configurations of the best performing Cuckoo filters.}
+  \label{fig:skyline_cf_configuration_break_down}
+\end{figure*}

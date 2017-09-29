@@ -1,0 +1,217 @@
+\begin{figure*}
+  \begin{subfigure}[t]{0.2\textwidth}
+    \centering
+    \tikzexternalenable
+    \tikzsetnextfilename{figure_skyline_bbf_access_pattern}
+    \begin{tikzpicture}
+    \begin{axis}[
+        height=3.7cm,
+        width=4.8cm,
+        xmode=log,
+        ymode=log,
+        xlabel={$t_w$},
+        ylabel={$n$},
+        xlabel shift=-2pt,
+        ylabel shift=-4pt,
+        legend style={at={(1,1.05)},anchor=south east,nodes={scale=0.75, transform shape}},
+        legend columns=2,
+        legend cell align={left},
+        clip mode=individual,
+        legend image post style={xscale=0.5,yscale=0.5}
+      ]
+
+    \input{../plot/skyline_bbf_access_pattern.tex}
+    \end{axis}
+    \end{tikzpicture}
+    \tikzexternaldisable
+    \caption{Variant}
+    \label{fig:skyline_bloom_variant}
+  \end{subfigure}%
+  \hspace{2em}%
+  \begin{subfigure}[t]{0.2\textwidth}
+    \centering
+    \tikzexternalenable
+    \tikzsetnextfilename{figure_skyline_bbf_blocksize}
+    \begin{tikzpicture}
+      \begin{axis}[
+          height=3.7cm,
+          width=4.8cm,
+          xmode=log,
+          ymode=log,
+          xlabel={$t_w$},
+          ylabel={$n$},
+          xlabel shift=-2pt,
+          ylabel shift=-4pt,
+          legend style={at={(1,1.05)},anchor=south east,nodes={scale=0.75, transform shape}},
+          legend columns=3,
+          legend cell align={left},
+          clip mode=individual,
+          legend image post style={xscale=0.5,yscale=0.5}
+        ]
+
+      \input{../plot/skyline_bbf_blocksize.tex}
+
+      \end{axis}
+    \end{tikzpicture}
+    \tikzexternaldisable
+    \caption{Block size}
+    \label{fig:skyline_block_size}
+  \end{subfigure}%
+  \hspace{2em}%
+  \begin{subfigure}[t]{0.2\textwidth}
+    \centering
+    \tikzexternalenable
+    \tikzsetnextfilename{figure_skyline_bbf_sector_cnt}
+      \begin{tikzpicture}
+      \begin{axis}[
+          height=3.7cm,
+          width=4.8cm,
+          xmode=log,
+          ymode=log,
+          xlabel={$t_w$},
+          ylabel={$n$},
+          xlabel shift=-2pt,
+          ylabel shift=-4pt,
+          legend style={at={(1,1.05)},anchor=south east,nodes={scale=0.75, transform shape}},
+          legend columns=6,
+          legend cell align={left},
+          clip mode=individual,
+          legend image post style={xscale=0.5,yscale=0.5}
+        ]
+
+      \input{../plot/skyline_bbf_sector_cnt.tex}
+
+      \end{axis}
+      \end{tikzpicture}
+      \tikzexternaldisable
+      \caption{Sector count}
+      \label{fig:skyline_sector_cnt}
+  \end{subfigure}%
+  \hspace{2em}%
+  \begin{subfigure}[t]{0.2\textwidth}
+    \centering
+    \tikzexternalenable
+    \tikzsetnextfilename{figure_skyline_bbf_zone_cnt}
+      \begin{tikzpicture}
+      \begin{axis}[
+          height=3.7cm,
+          width=4.8cm,
+          xmode=log,
+          ymode=log,
+          xlabel={$t_w$},
+          ylabel={$n$},
+          xlabel shift=-2pt,
+          ylabel shift=-4pt,
+          legend style={at={(1,1.05)},anchor=south east,nodes={scale=0.75, transform shape}},
+          legend columns=6,
+          legend cell align={left},
+          clip mode=individual,
+          legend image post style={xscale=0.5,yscale=0.5}
+        ]
+
+      \input{../plot/skyline_bbf_zone_cnt.tex}
+
+      \end{axis}
+      \end{tikzpicture}
+      \tikzexternaldisable
+      \caption{Cache-sectorization}
+      \label{fig:skyline_zone_cnt}
+  \end{subfigure}
+ \hspace*{7.5em}%
+  \begin{subfigure}[t]{0.2\textwidth}
+    \centering
+    \tikzexternalenable
+    \tikzsetnextfilename{figure_skyline_bbf_k}
+      \begin{tikzpicture}
+      \begin{axis}[
+          height=3.7cm,
+          width=4.8cm,
+          xmode=log,
+          ymode=log,
+          xlabel={$t_w$},
+          ylabel={$n$},
+          xlabel shift=-2pt,
+          ylabel shift=-4pt,
+          legend style={at={(1,1.05)},anchor=south east,nodes={scale=0.75, transform shape}},
+          legend columns=10,
+          legend cell align={left},
+          clip mode=individual,
+          legend image post style={xscale=0.5,yscale=0.5}
+        ]
+
+      \input{../plot/skyline_bbf_k.tex}
+
+      \end{axis}
+      \end{tikzpicture}
+      \tikzexternaldisable
+      \caption{\hspace{-0.1em}\# of hash functions $k$}
+      \label{fig:skyline_bbf_configuration_k}
+
+  \end{subfigure}%
+ \hspace{2em}%
+  \begin{subfigure}[t]{0.2\textwidth}
+    \centering
+    \tikzexternalenable
+    \tikzsetnextfilename{figure_skyline_bbf_addr}
+      \begin{tikzpicture}
+      \begin{axis}[
+          height=3.7cm,
+          width=4.8cm,
+          xmode=log,
+          ymode=log,
+          xlabel={$t_w$},
+          ylabel={$n$},
+          xlabel shift=-2pt,
+          ylabel shift=-4pt,
+          legend style={at={(1,1.05)},anchor=south east,nodes={scale=0.75, transform shape}},
+          legend columns=2,
+          legend cell align={left},
+          clip mode=individual,
+          legend image post style={xscale=0.5,yscale=0.5}
+        ]
+
+      \input{../plot/skyline_bbf_addr.tex}
+
+      \end{axis}
+      \end{tikzpicture}
+      \tikzexternaldisable
+      \caption{Modulo}
+      \label{fig:skyline_addr}
+
+  \end{subfigure}%
+  \hspace{2em}%
+  \begin{subfigure}[t]{0.2\textwidth}
+     \centering
+       \tikzexternalenable
+       \tikzsetnextfilename{figure_skyline_bbf_memory_footprint}
+       \begin{tikzpicture}
+       \begin{axis}[
+           height=3.7cm,
+           width=4.8cm,
+           xmode=log,
+           ymode=log,
+           xlabel={$t_w$},
+           ylabel={$n$},
+           xlabel shift=-2pt,
+           ylabel shift=-4pt,
+           legend style={at={(1,1.05)},anchor=south east,nodes={scale=0.75, transform shape}},
+           legend columns=3,
+           legend cell align={left},
+           clip mode=individual,
+           legend image post style={xscale=0.5,yscale=0.5}
+         ]
+
+       \input{../plot/skyline_memory_footprint.tex}
+
+       \end{axis}
+       \end{tikzpicture}
+       \tikzexternaldisable
+       \caption{Filter size}
+
+       \label{fig:skyline_mem}
+
+    \end{subfigure}
+
+  \caption{Configurations of the best performing blocked Bloom filters.}
+  \label{fig:skyline_bbf_configuration_break_down}
+\end{figure*}

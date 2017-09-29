@@ -9,3 +9,8 @@
 *.o
 *.so
 test
+*.exe
+.idea
+cmake-build-*
+**/perf.data
+build/*
